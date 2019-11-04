@@ -20,13 +20,22 @@
          const checkedStatus = task.done ? "checked" : "";
          const liElement = `<li>
                     <div class="view">
-                      <input class="toggle" type="checkbox" ${checkedStatus}>
+                      <input class="toggle" type="checkbox" ${checkedStatus} data-id="${task.id}">
                       <label>${task.title}</label>
                     </div>
                   </li>`;
           htmlString += liElement;
        });
        $('.todo-list').html(htmlString);
+
+       $('.toggle').change(function(e) {
+         $.post(`/tasks/${$(e.target).data("id")}`, {
+           _method: "PUT",
+           task: {
+             done: Boolean($(e.target).is(":checked"))
+           }
+         });
+       });
     });
   });
 </script>
