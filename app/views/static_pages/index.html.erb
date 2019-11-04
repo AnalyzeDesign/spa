@@ -17,9 +17,10 @@
     $.get("/tasks").success(function(data){
        let htmlString = "";
        $.each(data, function(index, task){
+         const checkedStatus = task.done ? "checked" : "";
          const liElement = `<li>
                     <div class="view">
-                      <input class="toggle" type="checkbox">
+                      <input class="toggle" type="checkbox" ${checkedStatus}>
                       <label>${task.title}</label>
                     </div>
                   </li>`;
