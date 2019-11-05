@@ -2,7 +2,7 @@ $(function() {
 
   function taskHtml(task) {
      const checkedStatus = task.done ? "checked" : "";
-     const liElement = `<li>
+     const liElement = `<li class="${checkedStatus}" id="listItem-${task.id}">
                 <div class="view">
                   <input class="toggle" type="checkbox" ${checkedStatus} data-id="${task.id}">
                   <label>${task.title}</label>
@@ -17,6 +17,9 @@ $(function() {
         task: {
           done: Boolean($(e.target).is(":checked"))
         }
+      }).success(function(data){
+        $('#listItem-'+data.id).replaceWith(taskHtml(data));
+        $('.toggle').change(toggleTask);
       });
   }
 
