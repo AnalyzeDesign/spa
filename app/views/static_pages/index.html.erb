@@ -17,19 +17,6 @@
 <script>
   $(function() {
 
-    $('#new-form').submit(function(e){
-      e.preventDefault();
-      const payload = {
-        task: {
-          title: $(this).find('.new-todo').val()
-        }
-      };
-      $.post("/tasks", payload).success(function(data){
-        console.log("successful http request");
-      });
-    });
-
-
     function taskHtml(task) {
        const checkedStatus = task.done ? "checked" : "";
        const liElement = `<li>
@@ -57,6 +44,19 @@
        });
        $('.todo-list').html(htmlString);
        $('.toggle').change(toggleTask);
+    });
+
+    $('#new-form').submit(function(e){
+      e.preventDefault();
+      const payload = {
+        task: {
+          title: $(this).find('.new-todo').val()
+        }
+      };
+      $.post("/tasks", payload).success(function(data){
+        $('.todo-list').append(taskHtml(data));
+        $('.toggle').click(toggleTask);
+      });
     });
   });
 </script>
