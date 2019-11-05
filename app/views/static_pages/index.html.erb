@@ -19,8 +19,16 @@
 
     $('#new-form').submit(function(e){
       e.preventDefault();
-      console.log("Task: ", $(this).find('.new-todo').val());
+      const payload = {
+        task: {
+          title: $(this).find('.new-todo').val()
+        }
+      };
+      $.post("/tasks", payload).success(function(data){
+        console.log("successful http request");
+      });
     });
+
 
     function taskHtml(task) {
        const checkedStatus = task.done ? "checked" : "";
